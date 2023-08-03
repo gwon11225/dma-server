@@ -11,8 +11,8 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    @Query(value = "SELECT * FROM post WHERE :number <= id < (:number + 10)", nativeQuery = true)
-    List<Post> findPost(Long number);
+        @Query(value = "SELECT * FROM post ORDER BY id DESC LIMIT 10 OFFSET :number", nativeQuery = true)
+        List<Post> findPost(@Param("number") Long number);
 
     @Query(value = "SELECT COUNT(*) FROM post", nativeQuery = true)
     Long getNumber();

@@ -2,9 +2,11 @@ package com.example.dma.Controller;
 
 import com.example.dma.Auth.SessionManger;
 import com.example.dma.Service.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,16 +18,15 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final SessionManger sessionManger;
 
     @PostMapping("/user/signup")
-    public void signup(@RequestBody HashMap<String, Object> userSignupData) {
-        userService.insertUserData(userSignupData);
+    public ResponseEntity<String> signup(@RequestBody HashMap<String, Object> userSignupData) {
+        return userService.signup(userSignupData);
     }
 
     @PostMapping("/user/login")
-    public void login(@RequestBody HashMap<String, Object> loginData, HttpServletResponse response) {
-        userService.login(loginData, response);
+    public ResponseEntity<String> login(@RequestBody HashMap<String, Object> loginData, HttpServletResponse response) {
+        return userService.login(loginData, response);
     }
 
     @GetMapping("/user/getUserInfo")
@@ -33,9 +34,18 @@ public class UserController {
         return userService.getUserInfo(request);
     }
 
-    @PostMapping("/user/logout")
-    public void logout(HttpServletRequest httpServletRequest){
-        userService.logout(httpServletRequest);
+    @GetMapping("/user/logout")
+    public void logout(HttpServletRequest request, HttpServletResponse response){
+        userService.logout(request, response);
     }
 
+    @GetMapping(value = "/user/delete")
+    public void delete(HttpServletRequest request, HttpServletResponse response) {
+        userService.deleteUser(request, response);
+    }
+
+    @GetMapping(value = "user/check")
+    public boolean check(HttpServletRequest request) {
+        return userService.loginCheck(request);
+    }
 }

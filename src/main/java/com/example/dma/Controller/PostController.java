@@ -1,12 +1,12 @@
 package com.example.dma.Controller;
 
+import com.example.dma.Auth.SessionManger;
 import com.example.dma.DTO.PostDTO;
+import com.example.dma.Domain.User;
 import com.example.dma.Service.PostService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
@@ -14,14 +14,15 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+    private final SessionManger sessionManger;
 
     @GetMapping(value = "/post")
-    public PostDTO post(@RequestBody HashMap<String, Object> info) {
-        return postService.getPost(info);
+    public PostDTO post(@RequestParam(value = "number") Long number) {
+        return postService.getPost(number);
     }
 
     @PostMapping(value = "/post/create")
-    public void createPost(@RequestBody HashMap<String, Object> postInfo) {
-        postService.createPost(postInfo);
+    public void createPost(@RequestBody HashMap<String, Object> postInfo, HttpServletRequest request) {
+        postService.createPost(postInfo, request);
     }
 }
