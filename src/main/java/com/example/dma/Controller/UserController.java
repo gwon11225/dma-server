@@ -44,7 +44,7 @@ public class UserController {
         userService.deleteUser(request, response);
     }
 
-    @GetMapping(value = "user/check")
+    @GetMapping(value = "/user/check")
     public boolean check(HttpServletRequest request) {
         return userService.loginCheck(request);
     }
