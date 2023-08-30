@@ -7,8 +7,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -18,10 +20,12 @@ import java.util.HashMap;
 public class UserService {
     private final UserRepository userRepository;
     private final SessionManger sessionManger;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @Transactional
     public ResponseEntity<String> signup(HashMap<String, Object> user_info) {
-        userRepository.insertUserData((String) user_info.get("name"), (String) user_info.get("email"), (String) user_info.get("password"));
+        userRepository.insertUserData((String) user_info.get("name"), (String) user_info.get("email"), bCryptPasswordEncoder.encode((String) user_info.get("password")));
         return ResponseEntity.ok("회원가입 성공");
     }
 
@@ -36,7 +40,7 @@ public class UserService {
     }
 
     private boolean isLogin(String email, String password) {
-        if(userRepository.isLogin(email, password) == 1){
+        if(bCryptPasswordEncoder.matches(password, userRepository.findPasswordByEmail(email))){
             return true;
         } else {
             return false;

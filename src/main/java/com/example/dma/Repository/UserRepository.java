@@ -14,8 +14,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "INSERT INTO user (name, email, password) VALUES (:name, :email, :password)", nativeQuery = true)
     void insertUserData(@Param("name") String name, @Param("email") String email, @Param("password") String password);
 
-    @Query(value = "SELECT COUNT(*) FROM user WHERE email = :email AND password = :password", nativeQuery = true)
-    int isLogin(@Param("email") String email, @Param("password") String password);
+    @Query(value = "SELECT password FROM user WHERE email = :email", nativeQuery = true)
+    String findPasswordByEmail(@Param("email") String email);
 
     User findUserByEmail(String email);
 
