@@ -1,4 +1,4 @@
-package com.example.dma.Domain;
+package com.example.dma.DTO;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.example.dma.Repository;
 
-import com.example.dma.Domain.Post;
+import com.example.dma.DTO.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

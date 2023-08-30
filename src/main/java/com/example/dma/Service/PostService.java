@@ -1,7 +1,7 @@
 package com.example.dma.Service;
 
-import com.example.dma.DTO.PostDTO;
-import com.example.dma.Domain.User;
+import com.example.dma.Domain.PostData;
+import com.example.dma.DTO.User;
 import com.example.dma.Repository.PostRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -17,8 +17,8 @@ public class PostService {
     private final PostRepository postRepository;
     private final SessionManger sessionManger;
 
-    public PostDTO getPost(Long number) {
-        return new PostDTO(postRepository.findPost((number - 1) * 10), postRepository.getNumber());
+    public PostData getPost(Long number) {
+        return new PostData(postRepository.findPost((number - 1) * 10), postRepository.getNumber());
     }
 
     @Transactional

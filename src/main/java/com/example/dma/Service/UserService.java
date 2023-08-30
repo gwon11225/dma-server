@@ -1,7 +1,7 @@
 package com.example.dma.Service;
 
 import com.example.dma.Auth.SessionManger;
-import com.example.dma.Domain.User;
+import com.example.dma.DTO.User;
 import com.example.dma.Repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
